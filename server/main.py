@@ -65,8 +65,8 @@ def start_matchmaking(user1 : User, user2 : User):
     tictactoe = TicTacToe(user1, user2)
     current_games.append(tictactoe)
 
-    user1.send_message("Game started against " + user2.username)
-    user2.send_message("Game started against " + user1.username)
+    user1.send_message("message/Game started against " + user2.username)
+    user2.send_message("message/Game started against " + user1.username)
 
     print(f"current game: {current_games[0].board}")
 

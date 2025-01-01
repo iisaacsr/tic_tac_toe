@@ -6,7 +6,6 @@ var url : String = "server-address"
 const PORT = 48646
 
 var _status: int = 0
-var _stream : StreamPeerTCP = StreamPeerTCP.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -15,20 +14,20 @@ func _ready() -> void:
 
 func _connect_to_host() -> void:
 	print("connection to %s:%d" % [url, PORT])
-	_stream.connect_to_host(url, PORT)
+	Connection.connect_to_host()
 		
 func _disconnect_from_host() -> void:
-	_stream.disconnect_from_host();
+	Connection.disconnect_from_host();
 	
 func _start_matchmaking() -> void:
 	_connect_to_host()
 	print("starting matchmaking")	
-	_stream.poll()
-	if _stream.get_status() != _stream.STATUS_CONNECTED:
+	Connection.stream.poll()
+	if !Connection.is_connected_to_server():
 		print("not connected")
 		return
 	var username : TextEdit = get_node("Username")
-	_stream.put_data(("matchmake/" + username.text).to_ascii_buffer())
+	Connection.stream.put_data(("matchmake/" + username.text).to_ascii_buffer())
 	
 		
 func _on_button_pressed() -> void:
@@ -36,10 +35,13 @@ func _on_button_pressed() -> void:
 	_start_matchmaking()
 		
 func _process(delta):
-	if _stream.get_status() == _stream.STATUS_CONNECTED:
-		if _stream.get_available_bytes() > 0:
-			var data = _stream.get_string(_stream.get_available_bytes())
-			print("received from server : ", data)
+	if Connection.is_connected_to_server():
+		if Connection.stream.get_available_bytes() > 0:
+			var data = Connection.stream.get_string(Connection.stream.get_available_bytes()).split("/")
+			match data[0]:
+				"message":
+					print(data[1])
+					get_tree().change_scene_to_file("res://tictactoe.tscn")
 	
 func _notification(what) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:

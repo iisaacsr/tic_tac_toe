@@ -14,3 +14,7 @@ config/name="tic_tac_toe"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Connection="*res://connection.gd"

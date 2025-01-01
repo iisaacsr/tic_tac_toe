@@ -11,5 +11,6 @@ config_version=5
 [application]
 
 config/name="tic_tac_toe"
+run/main_scene="res://base_node.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"

@@ -1,11 +1,11 @@
 import socket
-import sys 
+import websockets
 
 HOST = "127.0.0.1"
 PORT = 48646
 
-# Create a socket (connect two computers)
-def create_socket():
+# Start the server
+def start_server():
     server_address = (HOST, PORT)
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -20,13 +20,17 @@ def create_socket():
         try:
             print(f"connection from {client_address}")
             while True:
-                data = connection.recv(1024)
+                data = connection.recv(1024).decode('utf-8')
                 print(f'received {data}')
                 if not data:
                     break
-                connection.sendall(data)
+                connection.sendall(f"Hello, you said: {data}".encode('utf-8'))
+        except Exception as e:
+            print(f"server error: {e}")
+            break
         finally:
+            print(f"client {client_address} closed connection")
             connection.close()
 
 if __name__ == "__main__":
-    create_socket()
+    start_server()

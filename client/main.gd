@@ -24,12 +24,28 @@ func _ready() -> void:
 func _connect_to_host() -> void:
 	print("connection to %s:%d" % [url, PORT])
 	_stream.connect_to_host(url, PORT)
-	
+		
 func _disconnect_from_host() -> void:
 	_stream.disconnect_from_host();
 	
-func _notification(noti) -> void:
-	if(noti) == NOTIFICATION_WM_CLOSE_REQUEST:
-		_disconnect_from_host()
-		get_tree().quit()
+func _send_data() -> void:
+	print("sending data")	
+	_stream.poll()
+	if _stream.get_status() != _stream.STATUS_CONNECTED:
+		print("not connected")
+		return
+	_stream.put_data("yo".to_ascii_buffer())
+	
 		
+func _on_button_pressed() -> void:
+	_send_data()
+	
+func _process(delta):
+	if _stream.get_status() == _stream.STATUS_CONNECTED:
+		if _stream.get_available_bytes() > 0:
+			var data = _stream.get_string(_stream.get_available_bytes())
+			print("received from server : ", data)
+	
+func _notification(what) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		_disconnect_from_host()

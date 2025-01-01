@@ -20,10 +20,10 @@ def start_server():
         try:
             print(f"connection from {client_address}")
             while True:
-                data = connection.recv(1024).decode('utf-8')
-                print(f'received {data}')
-                if not data:
+                data = connection.recv(1024).decode()
+                if not data or data == "":
                     break
+                print(f"received data from {client_address}: {data}")
                 connection.sendall(f"Hello, you said: {data}".encode('utf-8'))
         except Exception as e:
             print(f"server error: {e}")

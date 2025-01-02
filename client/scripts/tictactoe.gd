@@ -86,16 +86,23 @@ func _on_tictactoe_state_changed(code : String, new_tictactoe : TicTacToe) -> vo
 			user2name.text = tictactoe.users[1]
 			current_player_turn = tictactoe.current_player
 		"move":
+			_handle_tictactoe_tiles(current_player_turn)
 			current_player_turn = tictactoe.current_player
-			_handle_tictactoe_buttons(current_player_turn)
 			
-func _handle_tictactoe_buttons(player_turn : int) -> void:
-	if player_turn == GameState.get_player_id():
+func _handle_tictactoe_tiles(player_turn : int) -> void:
+		_change_tictactoe_icons(CIRCLE_ICON) 
+		_change_tictactoe_icons(X_ICON)
 		
 					
-func _change_tictactoe_icons(icon : int)
+func _change_tictactoe_icons(icon : int):
+	print(tictactoe.board)
+	var name : String = "circle" if (icon == 1) else "x"
+	var row_i : int = 0
 	for row in tictactoe.board:
+		var column_i = 0
 		for column in row:
-			if player_turn == 0:
-					
-	
+			if column == icon:
+				var sprite : Sprite2D = get_node(str(row_i)+str(column_i)+name)
+				sprite.visible = true
+			column_i += 1
+		row_i += 1

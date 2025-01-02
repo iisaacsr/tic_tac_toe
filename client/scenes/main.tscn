@@ -1,12 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://nj1swdywi68u"]
+[gd_scene load_steps=4 format=3 uid="uid://nj1swdywi68u"]
 
-[ext_resource type="Script" path="res://main.gd" id="1_w0afw"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_4ofit"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_a3ixo"]
 font_size = 38
 
+[sub_resource type="LabelSettings" id="LabelSettings_0hx0g"]
+font_size = 11
+font_color = Color(0.991817, 0.0905841, 0.104254, 1)
+
 [node name="Main" type="Node2D"]
-script = ExtResource("1_w0afw")
+script = ExtResource("1_4ofit")
 
 [node name="Title" type="Label" parent="."]
 offset_left = 485.0
@@ -16,6 +20,23 @@ offset_bottom = 158.0
 text = "TIC TAC TOE"
 label_settings = SubResource("LabelSettings_a3ixo")
 horizontal_alignment = 1
+
+[node name="special_chars" type="Label" parent="."]
+visible = false
+offset_left = 428.0
+offset_top = 261.0
+offset_right = 613.0
+offset_bottom = 277.0
+text = "Special characters are not allowed."
+label_settings = SubResource("LabelSettings_0hx0g")
+
+[node name="special_chars_underline" type="ColorRect" parent="."]
+visible = false
+offset_left = 426.0
+offset_top = 259.0
+offset_right = 790.0
+offset_bottom = 261.0
+color = Color(0.721729, 0.0241526, 0.0508434, 1)
 
 [node name="Username_Label" type="Label" parent="."]
 offset_left = 325.0
@@ -45,4 +66,5 @@ offset_right = 860.0
 offset_bottom = 458.0
 text = "Find a game"
 
+[connection signal="text_changed" from="Username" to="." method="_on_username_text_changed"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

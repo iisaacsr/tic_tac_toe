@@ -51,24 +51,32 @@ def start_server():
 def handle_request(data : str, client_address : tuple, connection : socket):
     print(f"handling request {data} from {client_address}")
     req : str = data.split("/")[0]
-    username : str = data.split("/")[1]
     match(req):
         case "matchmake":
+            username = data.split("/")[1]
             users_in_queue.append(User(username, client_address, connection))
             if len(users_in_queue) % 2 == 0 and len(users_in_queue) > 0:
                 start_matchmaking(users_in_queue[0], users_in_queue[1])
+        case "details":
+            gameId = int(data.split("/")[1])
+            connection.sendall(f"details/{current_games[0]}".encode())
+
 
 def start_matchmaking(user1 : User, user2 : User):
     from tictactoe import TicTacToe
     print(f"starting matchmaking for {user1.username} and {user2.username}")
 
-    tictactoe = TicTacToe(user1, user2)
+    tictactoe = TicTacToe(len(current_games), user1, user2)
     current_games.append(tictactoe)
 
-    user1.send_message("message/Game started against " + user2.username)
-    user2.send_message("message/Game started against " + user1.username)
+    user1.send_message(f"message/Game started against {user2.username}#")
+    user2.send_message(f"message/Game started against {user1.username}#")
+    send_shared_message("change_scene/#", user1, user2)
+    send_shared_message(f"gameId/{tictactoe.id}#", user1, user2)
 
-    print(f"current game: {current_games[0].board}")
+def send_shared_message(message : str, user1 : User, user2 : User):
+    user1.send_message(message)
+    user2.send_message(message)
 
 if __name__ == "__main__":
     start_server()

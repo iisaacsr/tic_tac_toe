@@ -7,7 +7,8 @@ class TicTacToe:
     current_player : int
     game_over : bool
 
-    def __init__(self, user1 : User, user2 : User):
+    def __init__(self, id : int, user1 : User, user2 : User):
+        self.id = id
         self.board = [[0 for _ in range(3)] for _ in range(3)]
         self.users = [user1, user2]
         self.winner = None

@@ -17,4 +17,5 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Connection="*res://scripts/connection.gd"
+Connection="*res://scripts/singletons/connection.gd"
+GameState="*res://scripts/singletons/game_state.gd"

@@ -5,7 +5,6 @@ const DEV = true
 var url : String = "server-address"
 const PORT = 48646
 
-var _status: int = 0
 var stream : StreamPeerTCP = StreamPeerTCP.new()
 
 # Called when the node enters the scene tree for the first time.

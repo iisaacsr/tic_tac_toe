@@ -58,8 +58,8 @@ def handle_request(data : str, client_address : tuple, connection : socket):
             if len(users_in_queue) % 2 == 0 and len(users_in_queue) > 0:
                 start_matchmaking(users_in_queue[0], users_in_queue[1])
         case "details":
-            gameId = int(data.split("/")[1])
-            connection.sendall(f"details/{current_games[0]}".encode())
+            game_id = int(data.split("/")[1])
+            send_game_details(game_id, connection)
 
 
 def start_matchmaking(user1 : User, user2 : User):
@@ -71,8 +71,18 @@ def start_matchmaking(user1 : User, user2 : User):
 
     user1.send_message(f"message/Game started against {user2.username}#")
     user2.send_message(f"message/Game started against {user1.username}#")
+    send_shared_message(f"game_id/{tictactoe.id}#", user1, user2)
     send_shared_message("change_scene/#", user1, user2)
-    send_shared_message(f"gameId/{tictactoe.id}#", user1, user2)
+
+
+def send_game_details(game_id : int, connection : socket):
+    try:
+        tictactoe : TicTacToe = current_games[game_id]
+        connection.sendall(f"details/{tictactoe.to_json()}#".encode())
+    except IndexError:
+        connection.sendall(f"error/game_not_found#".encode())
+
+    
 
 def send_shared_message(message : str, user1 : User, user2 : User):
     user1.send_message(message)

@@ -1,3 +1,4 @@
+import json
 from models.user import User
 
 class TicTacToe:
@@ -12,7 +13,16 @@ class TicTacToe:
         self.board = [[0 for _ in range(3)] for _ in range(3)]
         self.users = [user1, user2]
         self.winner = None
-        self.game_over = False
         self.current_player = 1
+        self.game_over = False
 
+    def to_json(self):
+        return json.dumps({
+            "id": self.id,
+            "board": self.board,
+            "users": [user.username for user in self.users],
+            "winner": self.winner,
+            "current_player": self.current_player,
+            "game_over": self.game_over
+        })
 

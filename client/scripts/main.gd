@@ -60,6 +60,8 @@ func _process(delta):
 				match req.split("/")[0]:
 					"message":
 						print(req.split("/")[1])
+					"game_id":
+						GameState.set_game_id(int(req.split("/")[1]))
 					"change_scene":
 						get_tree().change_scene_to_file("res://scenes/tictactoe.tscn")	
 					

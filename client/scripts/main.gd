@@ -19,6 +19,7 @@ func _disconnect_from_host() -> void:
 	
 func _start_matchmaking() -> void:
 	var username : String = username_text_edit.text
+	GameState.set_username(username)
 	#regex to avoid code injection (no special chars)
 	var regex = RegEx.new()
 	regex.compile("[^A-Za-z0-9]")
@@ -62,6 +63,8 @@ func _process(delta):
 						print(req.split("/")[1])
 					"game_id":
 						GameState.set_game_id(int(req.split("/")[1]))
+					"player_id":
+						GameState.set_player_id(int(req.split("/")[1]))
 					"change_scene":
 						get_tree().change_scene_to_file("res://scenes/tictactoe.tscn")	
 					

@@ -60,6 +60,13 @@ def handle_request(data : str, client_address : tuple, connection : socket):
         case "details":
             game_id = int(data.split("/")[1])
             send_game_details(game_id, connection)
+        case "move":
+            req = data.split("/")
+            move = req[1]
+            game_id = int(req[2])
+            player_id = int(req[3])
+            handle_move(connection, game_id, move, player_id)
+
 
 
 def start_matchmaking(user1 : User, user2 : User):
@@ -68,9 +75,14 @@ def start_matchmaking(user1 : User, user2 : User):
 
     tictactoe = TicTacToe(len(current_games), user1, user2)
     current_games.append(tictactoe)
+    
+    user1Id = 0
+    user2Id = 1
 
     user1.send_message(f"message/Game started against {user2.username}#")
     user2.send_message(f"message/Game started against {user1.username}#")
+    user1.send_message(f"player_id/{user1Id}#")
+    user2.send_message(f"player_id/{user2Id}#")
     send_shared_message(f"game_id/{tictactoe.id}#", user1, user2)
     send_shared_message("change_scene/#", user1, user2)
 
@@ -82,7 +94,12 @@ def send_game_details(game_id : int, connection : socket):
     except IndexError:
         connection.sendall(f"error/game_not_found#".encode())
 
-    
+def handle_move(connection : socket, game_id : int, move : str, player_id : int):
+    try:
+        tictactoe : TicTacToe = current_games[game_id]
+        send_shared_message(f"move/{tictactoe.make_move(move, player_id)}#", tictactoe.users[0], tictactoe.users[1])
+    except IndexError:
+        connection.sendall(f"error/game_not_found#".encode())
 
 def send_shared_message(message : str, user1 : User, user2 : User):
     user1.send_message(message)

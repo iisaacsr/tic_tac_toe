@@ -16,6 +16,26 @@ class TicTacToe:
         self.current_player = 1
         self.game_over = False
 
+    def make_move(self, move : str, player_turn : int):
+        if self.current_player != player_turn:
+            print("not player turn")
+            return self.to_json()
+        
+        x = int(move[0])
+        y = int(move[1])
+
+        if self.board[x][y] != 0:
+            print("cell already taken")
+            return self.to_json()
+
+        self.board[x][y] = player_turn + 1
+
+        # opposite player turn
+        self.current_player = 1 if self.current_player == 0 else 0
+
+        return self.to_json()
+
+
     def to_json(self):
         return json.dumps({
             "id": self.id,

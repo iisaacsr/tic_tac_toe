@@ -88,7 +88,7 @@ position = Vector2(388, 140)
 scale = Vector2(0.192451, 0.200025)
 texture = ExtResource("3_sorkp")
 
-[node name="00button" type="Button" parent="." groups=["0,0"]]
+[node name="00button" type="Button" parent="." groups=["0,0", "buttons"]]
 offset_left = 314.0
 offset_top = 59.0
 offset_right = 466.0
@@ -111,7 +111,7 @@ position = Vector2(581, 142.21)
 scale = Vector2(0.192451, 0.200025)
 texture = ExtResource("3_sorkp")
 
-[node name="01button" type="Button" parent="." groups=["0,1"]]
+[node name="01button" type="Button" parent="." groups=["0,1", "buttons"]]
 offset_left = 493.0
 offset_top = 59.0
 offset_right = 667.0
@@ -134,7 +134,7 @@ position = Vector2(776, 142.21)
 scale = Vector2(0.192451, 0.200025)
 texture = ExtResource("3_sorkp")
 
-[node name="02button" type="Button" parent="." groups=["0,2"]]
+[node name="02button" type="Button" parent="." groups=["0,2", "buttons"]]
 offset_left = 692.0
 offset_top = 61.0
 offset_right = 850.0
@@ -157,7 +157,7 @@ position = Vector2(388, 323.21)
 scale = Vector2(0.192451, 0.200025)
 texture = ExtResource("3_sorkp")
 
-[node name="10button" type="Button" parent="." groups=["1,0"]]
+[node name="10button" type="Button" parent="." groups=["1,0", "buttons"]]
 offset_left = 317.0
 offset_top = 244.0
 offset_right = 469.0
@@ -180,7 +180,7 @@ position = Vector2(582, 325.21)
 scale = Vector2(0.63, 0.656)
 texture = ExtResource("2_7cep3")
 
-[node name="11button" type="Button" parent="." groups=["1,1"]]
+[node name="11button" type="Button" parent="." groups=["1,1", "buttons"]]
 offset_left = 491.0
 offset_top = 247.0
 offset_right = 667.0
@@ -203,7 +203,7 @@ position = Vector2(777, 322.21)
 scale = Vector2(0.192451, 0.200025)
 texture = ExtResource("3_sorkp")
 
-[node name="12button" type="Button" parent="." groups=["1,2"]]
+[node name="12button" type="Button" parent="." groups=["1,2", "buttons"]]
 offset_left = 692.0
 offset_top = 247.0
 offset_right = 852.0
@@ -226,7 +226,7 @@ position = Vector2(386, 511.21)
 scale = Vector2(0.192451, 0.200025)
 texture = ExtResource("3_sorkp")
 
-[node name="20button" type="Button" parent="." groups=["2,0"]]
+[node name="20button" type="Button" parent="." groups=["2,0", "buttons"]]
 offset_left = 315.0
 offset_top = 431.0
 offset_right = 466.0
@@ -249,7 +249,7 @@ position = Vector2(580, 514.21)
 scale = Vector2(0.192451, 0.200025)
 texture = ExtResource("3_sorkp")
 
-[node name="21button" type="Button" parent="." groups=["2,1"]]
+[node name="21button" type="Button" parent="." groups=["2,1", "buttons"]]
 offset_left = 492.0
 offset_top = 428.0
 offset_right = 667.0
@@ -272,7 +272,7 @@ position = Vector2(775, 516.21)
 scale = Vector2(0.192451, 0.200025)
 texture = ExtResource("3_sorkp")
 
-[node name="22button" type="Button" parent="." groups=["2,2"]]
+[node name="22button" type="Button" parent="." groups=["2,2", "buttons"]]
 offset_left = 691.0
 offset_top = 427.0
 offset_right = 855.0
@@ -283,12 +283,4 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_kq43i")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_u44ib")
 theme_override_styles/normal = SubResource("StyleBoxFlat_p8tgk")
 
-[connection signal="pressed" from="00button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="01button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="02button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="10button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="11button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="12button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="20button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="21button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="22button" to="." method="_on_button_pressed"]
+[connection signal="tictactoe_state" from="." to="." method="_on_tictactoe_state_changed"]

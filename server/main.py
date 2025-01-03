@@ -98,6 +98,14 @@ def handle_move(connection : socket, game_id : int, move : str, player_id : int)
     try:
         tictactoe : TicTacToe = current_games[game_id]
         send_shared_message(f"move/{tictactoe.make_move(move, player_id)}#", tictactoe.users[0], tictactoe.users[1])
+        match tictactoe.check_winner():
+            case "Draw":
+                send_shared_message("draw/#", tictactoe.users[0], tictactoe.users[1])
+            case "0":
+                send_shared_message(f"winner/0/{tictactoe.users[0].username}#", tictactoe.users[0], tictactoe.users[1])
+            case "1":
+                send_shared_message(f"winner/1/{tictactoe.users[1].username}#", tictactoe.users[0], tictactoe.users[1])
+        
     except IndexError:
         connection.sendall(f"error/game_not_found#".encode())
 

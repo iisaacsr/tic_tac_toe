@@ -56,7 +56,6 @@ func _on_username_text_changed() -> void:
 	else:
 		special_chars_label.visible = false
 		special_chars_underline_rect.visible = false 
-		matchmaking_button.disabled = false
 
 func _process(delta):
 	if Connection.is_connected_to_server():

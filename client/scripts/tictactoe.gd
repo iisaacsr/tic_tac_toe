@@ -139,7 +139,6 @@ func _change_tictactoe_icons(icon : int):
 		row_i += 1
 
 func _disable_board():
-	_disconnect_from_host()
 	_toggle_tictactoe_buttons(true)
 	user0turn.visible = false
 	user1turn.visible = false
@@ -147,8 +146,7 @@ func _disable_board():
 
 func _handle_draw():
 	_disable_board()
-	get_node("u0draw").visible = true
-	get_node("u1draw").visible = true
+	get_node("draw").visible = true
 
 func _handle_win(winning_player_id : int,  winning_player_username : String):
 	_disable_board()
@@ -160,4 +158,5 @@ func _on_button_pressed(button : Button) -> void:
 	Connection.stream.put_data(("move/" + str(coords) + "/" + str(game_id) + "/" + str(own_player_id)).to_ascii_buffer())
 
 func _on_home_button_pressed() -> void:
+	_disconnect_from_host()
 	get_tree().change_scene_to_file("res://scenes/main.tscn")

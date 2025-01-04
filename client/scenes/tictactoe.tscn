@@ -257,27 +257,18 @@ label_settings = SubResource("LabelSettings_ew2eq")
 autowrap_mode = 3
 
 [node name="u0turn" type="Label" parent="."]
-offset_left = 57.0
-offset_top = 73.0
-offset_right = 148.0
-offset_bottom = 96.0
+offset_left = 274.0
+offset_top = 40.0
+offset_right = 365.0
+offset_bottom = 63.0
 label_settings = SubResource("LabelSettings_ipywt")
-
-[node name="u0draw" type="Label" parent="."]
-visible = false
-offset_left = 55.0
-offset_top = 75.0
-offset_right = 229.0
-offset_bottom = 98.0
-text = "Game has been drawn"
-label_settings = SubResource("LabelSettings_06iud")
 
 [node name="u0won" type="Label" parent="."]
 visible = false
-offset_left = 55.0
-offset_top = 75.0
-offset_right = 95.0
-offset_bottom = 98.0
+offset_left = 198.0
+offset_top = 8.0
+offset_right = 273.0
+offset_bottom = 31.0
 text = "Has won !"
 label_settings = SubResource("LabelSettings_06iud")
 
@@ -296,27 +287,18 @@ label_settings = SubResource("LabelSettings_ew2eq")
 autowrap_mode = 3
 
 [node name="u1turn" type="Label" parent="."]
-offset_left = 907.0
-offset_top = 73.0
-offset_right = 998.0
-offset_bottom = 96.0
+offset_left = 798.0
+offset_top = 32.0
+offset_right = 889.0
+offset_bottom = 55.0
 label_settings = SubResource("LabelSettings_hpkrt")
-
-[node name="u1draw" type="Label" parent="."]
-visible = false
-offset_left = 907.0
-offset_top = 73.0
-offset_right = 998.0
-offset_bottom = 96.0
-text = "Game has been drawn"
-label_settings = SubResource("LabelSettings_wd30t")
 
 [node name="u1won" type="Label" parent="."]
 visible = false
-offset_left = 907.0
-offset_top = 75.0
-offset_right = 982.0
-offset_bottom = 98.0
+offset_left = 1056.0
+offset_top = 8.0
+offset_right = 1131.0
+offset_bottom = 31.0
 text = "Has won !"
 label_settings = SubResource("LabelSettings_06iud")
 
@@ -355,8 +337,16 @@ offset_bottom = 960.0
 rotation = 1.5708
 color = Color(0.180005, 0.180005, 0.180005, 1)
 
-[node name="homebutton" type="Button" parent="."]
+[node name="draw" type="Label" parent="."]
 visible = false
+offset_left = 940.0
+offset_top = 538.0
+offset_right = 1114.0
+offset_bottom = 561.0
+text = "Game has been drawn"
+label_settings = SubResource("LabelSettings_wd30t")
+
+[node name="homebutton" type="Button" parent="."]
 offset_left = 933.0
 offset_top = 570.0
 offset_right = 1118.0

@@ -59,6 +59,7 @@ def cleanup_client(sock):
                     if user.connection != sock:
                         try:
                             user.send_message(f"message/{user.username} disconnected#")
+                            print(f"{user.username} disconnected from game {game.id}")
                         except:
                             pass 
                 current_games.remove(game)

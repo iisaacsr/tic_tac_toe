@@ -76,6 +76,7 @@ func _tictactoe_from_json(data : Dictionary) -> TicTacToe:
 
 func _disconnect_from_host() -> void:
 	Connection.disconnect_from_host();
+	Connection.stream.poll()
 
 func _notification(what) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
@@ -159,4 +160,4 @@ func _on_button_pressed(button : Button) -> void:
 	Connection.stream.put_data(("move/" + str(coords) + "/" + str(game_id) + "/" + str(own_player_id)).to_ascii_buffer())
 
 func _on_home_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/main.tscn")	
+	get_tree().change_scene_to_file("res://scenes/main.tscn")

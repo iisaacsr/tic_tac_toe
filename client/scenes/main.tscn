@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://nj1swdywi68u"]
+[gd_scene load_steps=6 format=3 uid="uid://nj1swdywi68u"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_4ofit"]
 
@@ -8,6 +8,12 @@ font_size = 38
 [sub_resource type="LabelSettings" id="LabelSettings_0hx0g"]
 font_size = 11
 font_color = Color(0.991817, 0.0905841, 0.104254, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lcxef"]
+bg_color = Color(0.176471, 0.176471, 0.176471, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p6065"]
+bg_color = Color(0.404511, 0.404511, 0.404511, 1)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_4ofit")
@@ -59,12 +65,25 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Anonymous"
 
-[node name="Button" type="Button" parent="."]
+[node name="find_button" type="Button" parent="."]
 offset_left = 343.0
 offset_top = 344.0
 offset_right = 860.0
 offset_bottom = 458.0
 text = "Find a game"
 
+[node name="progress_bar" type="ProgressBar" parent="."]
+visible = false
+offset_left = 351.0
+offset_top = 463.0
+offset_right = 850.0
+offset_bottom = 480.0
+theme_override_styles/background = SubResource("StyleBoxFlat_lcxef")
+theme_override_styles/fill = SubResource("StyleBoxFlat_p6065")
+rounded = true
+show_percentage = false
+indeterminate = true
+editor_preview_indeterminate = false
+
 [connection signal="text_changed" from="Username" to="." method="_on_username_text_changed"]
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="find_button" to="." method="_on_button_pressed"]

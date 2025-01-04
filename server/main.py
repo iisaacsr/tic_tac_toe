@@ -19,34 +19,56 @@ def start_server():
     server_socket.bind(server_address)
     server_socket.listen(10)
     
-    active_connections.append(server_socket)
+    if server_socket not in active_connections:
+        active_connections.append(server_socket)
 
     while True:
-        readable, _, exceptional = select.select(active_connections, [], active_connections)
-        for sock in readable:
-            if sock is server_socket:
-                connection, client_address = sock.accept()
-                active_connections.append(connection)
-                print(f"new connection from {client_address}")
-            else:
-                try:
-                    data = sock.recv(1024).decode()
-                    if data:
-                        print(f"received data: {data}")
-                        handle_request(data, sock.getpeername(), sock)
-                    else:
-                        print(f"closing connection {sock.getpeername()}")
-                        active_connections.remove(sock)
-                        sock.close()
-                except Exception as e:
-                    print(f"error handling client: {e}")
-                    active_connections.remove(sock)
-                    sock.close()
+        try:
+            readable, _, exceptional = select.select(active_connections, [], active_connections)
 
-        for sock in exceptional:
-            print(f"handling exceptional condition for {sock.getpeername()}")
+            for sock in readable:
+                if sock is server_socket:
+                    connection, client_address = sock.accept()
+                    active_connections.append(connection)
+                    print(f"new connection from {client_address}")
+                else:
+                    try:
+                        data = sock.recv(1024).decode()
+                        if data:
+                            print(f"received data: {data}")
+                            handle_request(data, sock.getpeername(), sock)
+                        else:
+                            cleanup_client(sock)
+                    except (ConnectionResetError, ConnectionAbortedError) as e:
+                        print(f"connection error: {e}")
+                        cleanup_client(sock)
+                    except Exception as e:
+                        print(f"error handling client data: {e}")
+
+            for sock in exceptional:
+                cleanup_client(sock)
+
+        except select.error as e:
+            print(f"select error occurred: {e}")
+            continue
+
+def cleanup_client(sock):
+    try:        
+        for game in current_games[:]:  
+                for user in game.users:
+                    if user.connection != sock:
+                        try:
+                            user.send_message(f"message/{user.username} disconnected#")
+                        except:
+                            pass 
+                current_games.remove(game)
+
+        if sock in active_connections:
             active_connections.remove(sock)
-            sock.close()
+        sock.close()
+        
+    except Exception as e:
+        print(f"error during cleanup: {e}")
 
 def handle_request(data : str, client_address : tuple, connection : socket):
     print(f"handling request {data} from {client_address}")
@@ -57,6 +79,8 @@ def handle_request(data : str, client_address : tuple, connection : socket):
             users_in_queue.append(User(username, client_address, connection))
             if len(users_in_queue) % 2 == 0 and len(users_in_queue) > 0:
                 start_matchmaking(users_in_queue[0], users_in_queue[1])
+                users_in_queue.remove(users_in_queue[0])
+                users_in_queue.remove(users_in_queue[0])
         case "details":
             game_id = int(data.split("/")[1])
             send_game_details(game_id, connection)

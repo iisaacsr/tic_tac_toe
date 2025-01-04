@@ -27,7 +27,6 @@ func _start_matchmaking() -> void:
 	if !result:
 		_connect_to_host()
 		print("starting matchmaking")	
-		Connection.stream.poll()
 		if !Connection.is_connected_to_server():
 			print("not connected")
 			return

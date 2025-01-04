@@ -143,7 +143,6 @@ func _disable_board():
 	user0turn.visible = false
 	user1turn.visible = false
 	get_node("homebutton").visible = true
-	
 
 func _handle_draw():
 	_disable_board()
